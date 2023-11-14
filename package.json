@@ -1,0 +1,16 @@
+{
+  "name": "gpea-subscription-preferences",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "http-server .",
+    "build": "node mc-deploy.js "
+  },
+  "author": "",
+  "license": "ISC"
+}

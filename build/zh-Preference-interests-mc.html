@@ -1,0 +1,274 @@
+%%[
+VAR @SubscriberKey, @ListId, @Submitted, @SuccessUrl, @Contact, @subscriberRow, @SubscriberRows,
+@ContactId, @LeadId,
+@Email, @MobilePhone, @HasOptedOutOfEmail, @Et4ae5__HasOptedOutOfMobile__c, @DoNotCall, @Interested_In_Arctic__c,
+@Interested_In_Climate__c, @Interested_In_Forest__c,
+@Interested_In_Health__c, @Interested_In_Oceans__c, @Interested_In_Plastics__c
+
+/**** Set parameters ****/
+SET @SubscriberKey = _subscriberkey
+SET @JobID = jobid
+SET @ListID = listid
+SET @BatchID = _JobSubscriberBatchID
+
+SET @Submitted = RequestParameter('Submitted')
+
+/**** Denotes the Hong Kong Market form language ****/
+SET @Market__c = "a0J2u000001NjoNEAS"
+
+/**** Retreive Contact from CRM ****/
+SET @SubscriberRows = RetrieveSalesforceObjects("Contact",
+"Email,MobilePhone,FirstName,Preferred_Language__c,Interested_In_Climate__c,Interested_In_Arctic__c,Interested_In_Forest__c,Interested_In_Health__c,Interested_In_Oceans__c,Interested_In_Plastics__c,HasOptedOutOfEmail,Et4ae5__HasOptedOutOfMobile__c,DoNotCall","Id","=",@SubscriberKey)
+
+SET @ContactId = @SubscriberKey
+
+/* Set Lead or Contact's attributes */
+IF NOT EMPTY(@ContactId) AND RowCount(@SubscriberRows) > 0 THEN
+SET @subscriberRow = Row(@SubscriberRows, 1)
+SET @EmailAddress = Field(@subscriberRow, "Email")
+SET @MobilePhone = Field(@subscriberRow, "MobilePhone")
+SET @FirstName = Field(@subscriberRow, "FirstName")
+SET @Preferred_Language__c = Field(@subscriberRow,"Preferred_Language__c")
+SET @HasOptedOutOfEmail = Field(@subscriberRow, "HasOptedOutOfEmail")
+SET @Et4ae5__HasOptedOutOfMobile__c = Field(@subscriberRow, "et4ae5__HasOptedOutOfMobile__c")
+SET @DoNotCall = Field(@subscriberRow, "DoNotCall")
+SET @Interested_In_Climate__c = Field(@subscriberRow, "Interested_In_Climate__c")
+SET @Interested_In_Arctic__c = Field(@subscriberRow, "Interested_In_Arctic__c")
+SET @Interested_In_Forest__c = Field(@subscriberRow, "Interested_In_Forest__c")
+SET @Interested_In_Health__c = Field(@subscriberRow, "Interested_In_Health__c")
+SET @Interested_In_Oceans__c = Field(@subscriberRow, "Interested_In_Oceans__c")
+SET @Interested_In_Plastics__c = Field(@subscriberRow, "Interested_In_Plastics__c")
+
+ENDIF
+
+/* Set text language variables */
+IF @Preferred_Language__c == "English" THEN
+
+SET @MainTitle = Concat("Hi, ", @FirstName)
+SET @Subtitle = "Manage your preferences"
+SET @EmailLabel = "My Email address"
+SET @EmailInputEdit = "Edit"
+SET @CommunicationTypeText = "Email communication"
+SET @HasOptedOutOfEmailLabelText = "I would like to receive emails from Greenpeace." 
+SET @CampaignInterestText = "Tell us your campaign interests:"
+SET @InterestAllText = "I am interested in everything."
+SET @Interested_In_Arctic__cText = "Arctic"
+SET @Interested_In_Plastics__cText = "Plastics"
+SET @Interested_In_Health__cText = "Health"
+SET @Interested_In_Forest__cText = "Forests"
+SET @Interested_In_Oceans__cText = "Oceans"
+SET @Interested_In_Climate__cText = "Climate"
+SET @PreferenceButtonText = "Update my preference"
+SET @SuccessTitle = "You have successfully updated your preference."
+SET @SuccessSubtitle = "You can always change your preference again!"
+SET @DonateButtonText = "Donate to Greenpeace"
+SET @HomepageText = "Visit our homepage"
+SET @FollowUsText = "Follow us on social media"
+SET @ErrorTitle = "Something went wrong!"
+SET @ErrorSubtitle = "Please try again or contact supporter services:"
+
+ELSE 
+
+SET @MainTitle = Concat("您好 ", @FirstName)
+SET @Subtitle = "您可以在這裡設定通訊偏好"
+SET @EmailLabel = "我的電子信箱"
+SET @EmailInputEdit = "更改"
+SET @CommunicationTypeText = "電子通訊"
+SET @HasOptedOutOfEmailLabelText = "我想訂閱綠色和平的電子報。" 
+SET @CampaignInterestText = "請選擇您最關注的議題："
+SET @InterestAllText = "我十分關注所有環保議題。"
+SET @Interested_In_Arctic__cText = "北極"
+SET @Interested_In_Plastics__cText = "減塑"
+SET @Interested_In_Health__cText = "生活"
+SET @Interested_In_Forest__cText = "森林"
+SET @Interested_In_Oceans__cText = "海洋"
+SET @Interested_In_Climate__cText = "氣候"
+SET @PreferenceButtonText = "變更我的偏好設定"
+SET @SuccessTitle = "您的偏好設定已經成功更新。"
+SET @SuccessSubtitle = "您可以隨時回到此頁面變更您的偏好設定！"
+SET @DonateButtonText = "捐款支持環保工作"
+SET @HomepageText = "瀏覽綠色和平官方網站"
+SET @FollowUsText = "追蹤我們的社群媒體"
+SET @ErrorTitle = "資料有誤，未能成功變更偏好設定"
+SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
+
+ENDIF
+
+/* Set prechecked fields */
+IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
+IF @Et4ae5__HasOptedOutOfMobile__c == "false" THEN SET @Et4ae5__HasOptedOutOfMobile__c_Checked = "checked" ENDIF
+IF @DoNotCall == "false" THEN SET @DoNotCall_Checked = "checked" ENDIF
+IF @Interested_In_Climate__c == "true" THEN SET @Interested_In_Climate__c_Checked = "checked" SET @ClimateClass =
+"pc-selected" ENDIF
+IF @Interested_In_Arctic__c == "true" THEN SET @Interested_In_Arctic__c_Checked = "checked" SET @ArcticClass =
+"pc-selected" ENDIF
+IF @Interested_In_Forest__c == "true" THEN SET @Interested_In_Forest__c_Checked = "checked" SET @ForestClass =
+"pc-selected" ENDIF
+IF @Interested_In_Health__c == "true" THEN SET @Interested_In_Health__c_Checked = "checked" SET @HealthClass =
+"pc-selected" ENDIF
+IF @Interested_In_Oceans__c == "true" THEN SET @Interested_In_Oceans__c_Checked = "checked" SET @OceanClass =
+"pc-selected" ENDIF
+IF @Interested_In_Plastics__c == "true" THEN SET @Interested_In_Plastics__c_Checked = "checked" SET @PlasticClass =
+"pc-selected" ENDIF
+
+IF (@Interested_In_Climate__c == "true" AND @Interested_In_Arctic__c == "true" AND @Interested_In_Forest__c == "true"
+AND @Interested_In_Health__c == "true" AND @Interested_In_Oceans__c == "true" AND @Interested_In_Plastics__c == "true")
+THEN SET @InterestChecked = "checked"
+ENDIF
+
+]%%
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preference center</title>
+    <link rel="icon" type="image/png" sizes="96x96"
+        href="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/b653cfd9-0f21-4984-b51b-838b742706ab.png" />
+    <link rel="stylesheet" href="https://cloud.greentw.greenpeace.org/preference-center-css.css?v=1699939077563">
+    <link rel="stylesheet" href="https://cloud.greentw.greenpeace.org/lightning.css?v=1699939077563">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cloud.greentw.greenpeace.org/preference-center.js?v=1699939077563"></script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WRM6WK6');</script>
+    <!-- End Google Tag Manager -->
+</head>
+
+<body class="zh-hk">
+    <div class="pc-wrapper pc-thankyou">
+        <div class="pc-header">
+            <img src="https://image.greenhk.greenpeace.org/lib/fe3411717564047d7c1276/m/1/7487c4db-a113-416c-aa21-b23017c7789e.png"
+                alt="" class="pc-header__logo">
+        </div>
+        <div class="pc-main" id="preference">
+            <div class="pc-main__title">
+                %%=v(@MainTitle)=%%
+            </div>
+            <div class="pc-main__subtitle">
+            </div>
+            <form method="post" action="" class="" id="form">
+                <div class="pc-main__form-wrapper">
+                    <div class="pc-form-border"></div>
+                    <div class="pc-form-subtitle">%%=v(@CampaignInterestText)=%%</div>
+                    <div class="slds-form-element form-element">
+                        <div class="slds-form-element__control pc-align-center">
+                            <span class="slds-checkbox slds-checkbox_standalone pc-form-inline">
+                                <input type="checkbox" name="" %%=v(@InterestChecked)=%% id="issue-checkbox-01"
+                                    onClick="selectAll()">
+                                <span class="slds-checkbox--faux"></span>
+                            </span>
+                            <label class="slds-form-element__label" for="">%%=v(@InterestAllText)=%%</label>
+                        </div>
+                    </div>
+                    <div class="pc-form-issues">
+
+                        <label for="Interested_In_Arctic__c" class="pc-form-issue %%=v(@ArcticClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Arctic__c"
+                                id="Interested_In_Arctic__c" value="" %%=v(@Interested_In_Arctic__c_Checked)=%%>
+                            %%=v(@Interested_In_Arctic__cText)=%%</label>
+                        <label for="Interested_In_Plastics__c" class="pc-form-issue %%=v(@PlasticClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Plastics__c"
+                                id="Interested_In_Plastics__c" value="" %%=v(@Interested_In_Plastics__c_Checked)=%%>
+                            %%=v(@Interested_In_Plastics__cText)=%%</label>
+                        <label for="Interested_In_Health__c" class="pc-form-issue %%=v(@HealthClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Health__c"
+                                id="Interested_In_Health__c" value="" %%=v(@Interested_In_Health__c_Checked)=%%>
+
+                            %%=v(@Interested_In_Health__cText)=%%</label>
+                        <label for="Interested_In_Forest__c" class="pc-form-issue %%=v(@ForestClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Forest__c"
+                                id="Interested_In_Forest__c" value="" %%=v(@Interested_In_Forest__c_Checked)=%%>
+                            %%=v(@Interested_In_Forest__cText)=%%</label>
+                        <label for="Interested_In_Oceans__c" class="pc-form-issue %%=v(@OceanClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Oceans__c"
+                                id="Interested_In_Oceans__c" value="" %%=v(@Interested_In_Oceans__c_Checked)=%%>
+                            %%=v(@Interested_In_Oceans__cText)=%%</label>
+                        <label for="Interested_In_Climate__c" class="pc-form-issue %%=v(@ClimateClass)=%%">
+                            <input class="hide" type="checkbox" name="Interested_In_Climate__c"
+                                id="Interested_In_Climate__c" value="" %%=v(@Interested_In_Climate__c_Checked)=%%>
+                            %%=v(@Interested_In_Climate__cText)=%%</label>
+                    </div>
+                    <button class="pc-btn-green" id="preferenceButton">%%=v(@PreferenceButtonText)=%%</button>
+                </div>
+        </div>
+        <input class="hide" type="checkbox" name="EmailOptIn" id="EmailOptIn" %%=v(@EmailOptIn_Checked)=%%>
+        <input type="hidden" name="SubscriberKey" value="%%=v(@SubscriberKey)=%%">
+        <input type="hidden" name="Channel" value="Interests">
+        <input type="hidden" name="JobId" value="%%=v(@JobID)=%%">
+        <input type="hidden" name="ListID" value="%%=v(@ListID)=%%">
+        <input type="hidden" name="BatchID" value="%%=v(@BatchID)=%%">
+        </form>
+        <script src="https://cloud.greentw.greenpeace.org/preference-email-post"></script>
+    </div>
+    <div class="pc-wrapper pc-thankyou hide" id="thankYou">
+        <div class="pc-main">
+            <div class="pc-main__title">
+                %%=v(@SuccessTitle)=%%
+            </div>
+            <div class="pc-main__subtitle">
+                %%=v(@SuccessSubtitle)=%%
+            </div>
+            <div class="pc-main__form-wrapper">
+                <a href="https://supporter.ea.greenpeace.org/tw/s/donate"><button
+                        class="pc-btn-orange">%%=v(@DonateButtonText)=%%</button></a>
+                <a href="https://www.facebook.com/greenpeace.org.tw"><button
+                        class="pc-btn-green">%%=v(@HomepageText)=%%</button></a>
+                <div class="pc-form-boldtitle">%%=v(@FollowUsText)=%%</div>
+                <div class="pc-socials">
+                    <a href="https://www.facebook.com/greenpeace.org.tw/" target="_blank" class="pc-social-facebook">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/06f401e4-7729-4646-9872-1e16532ac87f.png"
+                            alt="Facebook">
+                    </a>
+                    <a href="https://line.me/R/ti/p/%40784kpkzx" target="_blank" class="pc-social-tweeter">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/837ed929-f076-4326-8746-4c4b9522fe02.png"
+                            alt="LINE">
+                    </a>
+                    <a href="https://www.instagram.com/greenpeace_tw/" target="_blank" class="pc-social-instagram">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/dd80c10c-677e-4eaa-b917-2bf4fcf578d5.png"
+                            alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pc-wrapper pc-thankyou hide" id="errorMessage">
+        <div class="pc-main">
+            <div class="pc-main__title">
+                %%=v(@ErrorTitle)=%% <br>
+                %%=v(@ErrorSubtitle)=%% <a
+                    href="mailto: donor.services.hk@greenpeace.org">donor.services.hk@greenpeace.org</a>
+            </div>
+            <div class="pc-main__form-wrapper">
+                <a href="https://supporter.ea.greenpeace.org/tw/s/donate"><button
+                        class="pc-btn-orange">%%=v(@DonateButtonText)=%%</button></a>
+                <a href="https://www.facebook.com/greenpeace.org.tw"><button
+                        class="pc-btn-green">%%=v(@HomepageText)=%%</button></a>
+                <div class="pc-form-boldtitle">%%=v(@FollowUsText)=%%</div>
+                <div class="pc-socials">
+                    <a href="https://www.facebook.com/greenpeace.org.tw/" target="_blank" class="pc-social-facebook">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/06f401e4-7729-4646-9872-1e16532ac87f.png"
+                            alt="Facebook">
+                    </a>
+                    <a href="https://line.me/R/ti/p/%40784kpkzx" target="_blank" class="pc-social-tweeter">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/837ed929-f076-4326-8746-4c4b9522fe02.png"
+                            alt="LINE">
+                    </a>
+                    <a href="https://www.instagram.com/greenpeace_tw/" target="_blank" class="pc-social-instagram">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/dd80c10c-677e-4eaa-b917-2bf4fcf578d5.png"
+                            alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

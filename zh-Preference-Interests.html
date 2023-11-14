@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preference center</title>
+    <link rel="icon" type="image/png" sizes="96x96"
+        href="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/b653cfd9-0f21-4984-b51b-838b742706ab.png" />
+    <link rel="stylesheet" href="assets/preference-center-css.css?v=0">
+    <link rel="stylesheet" href="assets/lightning.css?v=0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/preference-center.js?v=0"></script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WRM6WK6');</script>
+    <!-- End Google Tag Manager -->
+</head>
+
+<body class="zh-hk">
+    <div class="pc-wrapper pc-thankyou">
+        <div class="pc-header">
+            <img src="https://image.greenhk.greenpeace.org/lib/fe3411717564047d7c1276/m/1/7487c4db-a113-416c-aa21-b23017c7789e.png"
+                alt="" class="pc-header__logo">
+        </div>
+        <div class="pc-main" id="preference">
+            <div class="pc-main__title">
+                {{MainTitle}}
+            </div>
+            <div class="pc-main__subtitle">
+            </div>
+            <form method="post" action="" class="" id="form">
+                <div class="pc-main__form-container">
+                    <div class="pc-main__form-col">
+                        
+                    </div>
+                    <div class="pc-main__form-col"></div>
+                </div>
+                <div class="pc-main__form-wrapper">
+                    <div class="pc-form-border"></div>
+                    <div class="pc-form-subtitle">{{CampaignInterestText}}</div>
+                    <div class="slds-form-element form-element">
+                        <div class="slds-form-element__control pc-align-center">
+                            <span class="slds-checkbox slds-checkbox_standalone pc-form-inline">
+                                <input type="checkbox" name="" {{InterestChecked}} id="issue-checkbox-01"
+                                    onClick="selectAll()">
+                                <span class="slds-checkbox--faux"></span>
+                            </span>
+                            <label class="slds-form-element__label" for="">{{InterestAllText}}</label>
+                        </div>
+                    </div>
+                    <div class="pc-form-issues">
+
+                        <label for="Interested_In_Arctic__c" class="pc-form-issue {{ArcticClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Arctic__c"
+                                id="Interested_In_Arctic__c" value="" {{Interested_In_Arctic__c_Checked}}>
+                            {{Interested_In_Arctic__cText}}</label>
+                        <label for="Interested_In_Plastics__c" class="pc-form-issue {{PlasticClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Plastics__c"
+                                id="Interested_In_Plastics__c" value="" {{Interested_In_Plastics__c_Checked}}>
+                            {{Interested_In_Plastics__cText}}</label>
+                        <label for="Interested_In_Health__c" class="pc-form-issue {{HealthClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Health__c"
+                                id="Interested_In_Health__c" value="" {{Interested_In_Health__c_Checked}}>
+
+                            {{Interested_In_Health__cText}}</label>
+                        <label for="Interested_In_Forest__c" class="pc-form-issue {{ForestClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Forest__c"
+                                id="Interested_In_Forest__c" value="" {{Interested_In_Forest__c_Checked}}>
+                            {{Interested_In_Forest__cText}}</label>
+                        <label for="Interested_In_Oceans__c" class="pc-form-issue {{OceanClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Oceans__c"
+                                id="Interested_In_Oceans__c" value="" {{Interested_In_Oceans__c_Checked}}>
+                            {{Interested_In_Oceans__cText}}</label>
+                        <label for="Interested_In_Climate__c" class="pc-form-issue {{ClimateClass}}">
+                            <input class="hide" type="checkbox" name="Interested_In_Climate__c"
+                                id="Interested_In_Climate__c" value="" {{Interested_In_Climate__c_Checked}}>
+                            {{Interested_In_Climate__cText}}</label>
+                    </div>
+                    <button class="pc-btn-green" id="preferenceButton">{{PreferenceButtonText}}</button>
+                </div>
+        </div>
+        <input class="hide" type="checkbox" name="EmailOptIn" id="EmailOptIn" {{EmailOptIn_Checked}}>
+        <input type="hidden" name="SubscriberKey" value="{{SubscriberKey}}">
+        <input type="hidden" name="Channel" value="Interests">
+        <input type="hidden" name="JobId" value="{{JobID}}">
+        <input type="hidden" name="ListID" value="{{ListID}}">
+        <input type="hidden" name="BatchID" value="{{BatchID}}">
+        </form>
+        <script src="https://cloud.greentw.greenpeace.org/preference-email-post"></script>
+    </div>
+    <div class="pc-wrapper pc-thankyou hide" id="thankYou">
+        <div class="pc-main">
+            <div class="pc-main__title">
+                {{SuccessTitle}}
+            </div>
+            <div class="pc-main__subtitle">
+                {{SuccessSubtitle}}
+            </div>
+            <div class="pc-main__form-wrapper">
+                <a href="https://supporter.ea.greenpeace.org/tw/s/donate"><button
+                        class="pc-btn-orange">{{DonateButtonText}}</button></a>
+                <a href="https://www.facebook.com/greenpeace.org.tw"><button
+                        class="pc-btn-green">{{HomepageText}}</button></a>
+                <div class="pc-form-boldtitle">{{FollowUsText}}</div>
+                <div class="pc-socials">
+                    <a href="https://www.facebook.com/greenpeace.org.tw/" target="_blank" class="pc-social-facebook">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/06f401e4-7729-4646-9872-1e16532ac87f.png"
+                            alt="Facebook">
+                    </a>
+                    <a href="https://line.me/R/ti/p/%40784kpkzx" target="_blank" class="pc-social-tweeter">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/837ed929-f076-4326-8746-4c4b9522fe02.png"
+                            alt="LINE">
+                    </a>
+                    <a href="https://www.instagram.com/greenpeace_tw/" target="_blank" class="pc-social-instagram">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/dd80c10c-677e-4eaa-b917-2bf4fcf578d5.png"
+                            alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pc-wrapper pc-thankyou hide" id="errorMessage">
+        <div class="pc-main">
+            <div class="pc-main__title">
+                {{ErrorTitle}} <br>
+                {{ErrorSubtitle}} <a
+                    href="mailto: donor.services.hk@greenpeace.org">donor.services.hk@greenpeace.org</a>
+            </div>
+            <div class="pc-main__form-wrapper">
+                <a href="https://supporter.ea.greenpeace.org/tw/s/donate"><button
+                        class="pc-btn-orange">{{DonateButtonText}}</button></a>
+                <a href="https://www.facebook.com/greenpeace.org.tw"><button
+                        class="pc-btn-green">{{HomepageText}}</button></a>
+                <div class="pc-form-boldtitle">{{FollowUsText}}</div>
+                <div class="pc-socials">
+                    <a href="https://www.facebook.com/greenpeace.org.tw/" target="_blank" class="pc-social-facebook">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/06f401e4-7729-4646-9872-1e16532ac87f.png"
+                            alt="Facebook">
+                    </a>
+                    <a href="https://line.me/R/ti/p/%40784kpkzx" target="_blank" class="pc-social-tweeter">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/837ed929-f076-4326-8746-4c4b9522fe02.png"
+                            alt="LINE">
+                    </a>
+                    <a href="https://www.instagram.com/greenpeace_tw/" target="_blank" class="pc-social-instagram">
+                        <img src="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/dd80c10c-677e-4eaa-b917-2bf4fcf578d5.png"
+                            alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
