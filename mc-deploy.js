@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const os = require('os')
 // const FTPS = require('ftps')
-
+const env = process.argv.slice(2)[1]
 
 /*
 Install the dependencies first
@@ -55,7 +55,12 @@ console.log('generate index_mc.html from: ' + pageName)
 // patch form contents
 const deployDate = Date.now();
 
-content = content.replace(/assets/g, 'https://cloud.greentw.greenpeace.org');
+if(env === 'dev'){
+  content = content.replace(/assets/g, 'https://change.greenpeace.org.tw/2023/test/pref');
+}else{
+  content = content.replace(/assets/g, 'https://cloud.greentw.greenpeace.org');
+}
+
 content = content.replace(/{{/g, '%%=v(@');
 content = content.replace(/}}/g, ')=%%');
 

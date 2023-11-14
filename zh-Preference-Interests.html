@@ -29,7 +29,7 @@
             <img src="https://image.greenhk.greenpeace.org/lib/fe3411717564047d7c1276/m/1/7487c4db-a113-416c-aa21-b23017c7789e.png"
                 alt="" class="pc-header__logo">
         </div>
-        <div class="pc-main" id="preference">
+        <div class="pc-main pc-main--lg" id="preference">
             <div class="pc-main__title">
                 {{MainTitle}}
             </div>
@@ -37,54 +37,61 @@
             </div>
             <form method="post" action="" class="" id="form">
                 <div class="pc-main__form-container">
-                    <div class="pc-main__form-col">
-                        
-                    </div>
-                    <div class="pc-main__form-col"></div>
-                </div>
-                <div class="pc-main__form-wrapper">
-                    <div class="pc-form-border"></div>
-                    <div class="pc-form-subtitle">{{CampaignInterestText}}</div>
-                    <div class="slds-form-element form-element">
-                        <div class="slds-form-element__control pc-align-center">
-                            <span class="slds-checkbox slds-checkbox_standalone pc-form-inline">
-                                <input type="checkbox" name="" {{InterestChecked}} id="issue-checkbox-01"
-                                    onClick="selectAll()">
-                                <span class="slds-checkbox--faux"></span>
-                            </span>
-                            <label class="slds-form-element__label" for="">{{InterestAllText}}</label>
+                    <div class="pc-main__form-col pc-main__form-col--pd">
+                        <div class="pc-form-subtitle">{{CampaignInterestText}}</div>
+                        <div class="slds-form-element form-element">
+                            <div class="slds-form-element__control pc-align-center">
+                                <span class="slds-checkbox slds-checkbox_standalone pc-form-inline">
+                                    <input type="checkbox" name="" {{InterestChecked}} id="issue-checkbox-01"
+                                        onClick="selectAll()">
+                                    <span class="slds-checkbox--faux"></span>
+                                </span>
+                                <label class="slds-form-element__label" for="">{{InterestAllText}}</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pc-form-issues">
+                        <div class="pc-form-border"></div>
+                        <div class="pc-form-issues">
 
-                        <label for="Interested_In_Arctic__c" class="pc-form-issue {{ArcticClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Arctic__c"
-                                id="Interested_In_Arctic__c" value="" {{Interested_In_Arctic__c_Checked}}>
-                            {{Interested_In_Arctic__cText}}</label>
-                        <label for="Interested_In_Plastics__c" class="pc-form-issue {{PlasticClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Plastics__c"
-                                id="Interested_In_Plastics__c" value="" {{Interested_In_Plastics__c_Checked}}>
-                            {{Interested_In_Plastics__cText}}</label>
-                        <label for="Interested_In_Health__c" class="pc-form-issue {{HealthClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Health__c"
-                                id="Interested_In_Health__c" value="" {{Interested_In_Health__c_Checked}}>
+                            <label for="Interested_In_Climate__c" class="pc-form-issue {{ClimateClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Climate__c"
+                                    id="Interested_In_Climate__c" value="" {{Interested_In_Climate__c_Checked}}>
+                                <span>{{Interested_In_Climate__cText}}<small>{{Interested_In_Climate__cText_sub}}</small></span>
+                            </label>
+                            <label for="Interested_In_Oceans__c" class="pc-form-issue {{OceanClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Oceans__c"
+                                    id="Interested_In_Oceans__c" value="" {{Interested_In_Oceans__c_Checked}}>
+                                <span>{{Interested_In_Oceans__cText}}<small>{{Interested_In_Oceans__cText_sub}}</small></span>
+                            </label>
+                            <label for="Interested_In_Forest__c" class="pc-form-issue {{ForestClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Forest__c"
+                                    id="Interested_In_Forest__c" value="" {{Interested_In_Forest__c_Checked}}>
+                                <span>{{Interested_In_Forest__cText}}<small>{{Interested_In_Forest__cText_sub}}</small></span>
+                            </label>
+                            <label for="Interested_In_Plastics__c" class="pc-form-issue {{PlasticClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Plastics__c"
+                                    id="Interested_In_Plastics__c" value="" {{Interested_In_Plastics__c_Checked}}>
+                                <span>{{Interested_In_Plastics__cText}}<small>{{Interested_In_Plastics__cText_sub}}</small></span>
+                            </label>
+                            <label for="Interested_In_Arctic__c" class="pc-form-issue {{ArcticClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Arctic__c"
+                                    id="Interested_In_Arctic__c" value="" {{Interested_In_Arctic__c_Checked}}>
+                                <span>{{Interested_In_Arctic__cText}}<small>{{Interested_In_Arctic__cText_sub}}</small></span>
+                            </label>
+                            <label for="Interested_In_Health__c" class="pc-form-issue {{HealthClass}}">
+                                <input class="hide" type="checkbox" name="Interested_In_Health__c"
+                                    id="Interested_In_Health__c" value="" {{Interested_In_Health__c_Checked}}>
+                                <span>{{Interested_In_Health__cText}}<small>{{Interested_In_Health__cText_sub}}</small></span>
+                            </label>
+                        
 
-                            {{Interested_In_Health__cText}}</label>
-                        <label for="Interested_In_Forest__c" class="pc-form-issue {{ForestClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Forest__c"
-                                id="Interested_In_Forest__c" value="" {{Interested_In_Forest__c_Checked}}>
-                            {{Interested_In_Forest__cText}}</label>
-                        <label for="Interested_In_Oceans__c" class="pc-form-issue {{OceanClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Oceans__c"
-                                id="Interested_In_Oceans__c" value="" {{Interested_In_Oceans__c_Checked}}>
-                            {{Interested_In_Oceans__cText}}</label>
-                        <label for="Interested_In_Climate__c" class="pc-form-issue {{ClimateClass}}">
-                            <input class="hide" type="checkbox" name="Interested_In_Climate__c"
-                                id="Interested_In_Climate__c" value="" {{Interested_In_Climate__c_Checked}}>
-                            {{Interested_In_Climate__cText}}</label>
+                        </div>
+                        <button class="pc-btn-green" id="preferenceButton">{{PreferenceButtonText}}</button>
                     </div>
-                    <button class="pc-btn-green" id="preferenceButton">{{PreferenceButtonText}}</button>
+                    <div class="pc-main__form-col">
+                        <div class="pc-main__form-kv" style="background-image: url(assets/general.jpg);"></div>
+                    </div>
                 </div>
+
         </div>
         <input class="hide" type="checkbox" name="EmailOptIn" id="EmailOptIn" {{EmailOptIn_Checked}}>
         <input type="hidden" name="SubscriberKey" value="{{SubscriberKey}}">
