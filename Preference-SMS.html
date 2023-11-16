@@ -41,7 +41,7 @@
                 <div class="pc-main__form-container">
                     <div class="pc-main__form-col pc-main__form-col--pd">
                         <label for="" class="pc-form-label">{{MobileLabel}}</label>
-                        <div class="slds-form__row pc-form-element">
+                        <div class="slds-form__row slds-form__row--start pc-form-element">
                             <div class="slds-form-element__control pc-form-control">
                                 <div class="slds-select_container">
                                     <select class="slds-select pc-form-select disabled" id="phone-select-01">
@@ -55,6 +55,7 @@
                                     placeholder="{{MobilePhoneSubString}}" class="pc-form-input disabled" disabled>
                                 <button class="pc-btn-input-edit" onclick="enableInputPhone()"
                                     type="button">{{MobileInputEdit}}</button>
+                                <p class="pc-form__msg hide" id="phone-input-01-msg"></p>
                             </div>
                         </div>
 
@@ -116,7 +117,7 @@
                             </label>
                             
                         </div>
-                        <button class="pc-btn-green">{{PreferenceButtonText}}</button>
+                        <button class="pc-btn-green" id="preferenceButton">{{PreferenceButtonText}}</button>
                     </div>
                     <div class="pc-main__form-col">
                         <div class="pc-main__form-kv" style="background-image: url(assets/general.jpg);"></div>

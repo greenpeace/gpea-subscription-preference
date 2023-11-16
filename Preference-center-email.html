@@ -55,9 +55,11 @@
               <div class="slds-form-element__control pc-form-control">
                 <input type="text" name="EmailAddress" id="email-input-01" value="" placeholder="{{EmailAddress}}"
                   class="slds-input pc-form-input disabled" disabled>
-                <input type="button" class="pc-btn-input-edit" onClick="enableInputEmail()" />
+                <!-- <input type="button" class="pc-btn-input-edit" onClick="enableInputEmail()" /> -->
                 <button class="pc-btn-input-edit" type="button" onClick="enableInputEmail()">{{EmailInputEdit}}</button>
+                
               </div>
+              <p class="pc-form__msg hide" id="email-input-01-msg"></p>
             </div>
             <div class="pc-form-title">{{CommunicationTypeText}}</div>
             <div class="slds-form-element__control pc-align-center">
@@ -66,6 +68,7 @@
                 <span class="slds-checkbox--faux"></span>
               </span>
               <label class="slds-form-element__label" for="HasOptedOutOfEmail">{{HasOptedOutOfEmailLabelText}}</label>
+              
             </div>
             <div class="pc-form-border">
             </div>

@@ -313,6 +313,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  overflow: hidden;
   background: #fff;
   border: 1px solid #eee;
   border-radius: 4px;
@@ -386,6 +387,9 @@ body {
   border-radius: 8px;
   font-size: 16px !important;
 }
+.pc-form__msg {
+  color: #E4405F;
+}
 .pc-form-select {
   width: 85px !important;
   padding: 0 16px;
@@ -426,6 +430,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   margin: 0 8px;
+  height: 48px;
 }
 .pc-phone-textbox {
   width: calc(100% - 109px);
@@ -560,6 +565,11 @@ body {
   font-size: 12px;
   letter-spacing: 0.4px;
 }
+.slds-form__row--start {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
 .pc-form-border {
   height: 1px;
   background: #eee;
@@ -626,6 +636,10 @@ body {
   color: #fff;
   font-size: 16px;
   letter-spacing: 0.15px;
+}
+.pc-btn-green:disabled {
+  background-color: rgba(238, 238, 238, 0.5) !important;
+  color: #ccc;
 }
 .pc-btn-orange {
   width: 100%;
@@ -813,4 +827,8 @@ body {
     -webkit-transform: translate(24px, 0);
             transform: translate(24px, 0);
   }
+}
+.error {
+  border-color: #E4405F !important;
+  color: #E4405F !important;
 }
