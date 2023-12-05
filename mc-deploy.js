@@ -1,8 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const os = require('os')
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
 // const FTPS = require('ftps')
-const env = process.argv.slice(2)[1]
+const env = process.argv.slice(2)[2];
 
 /*
 Install the dependencies first
@@ -35,29 +35,39 @@ $choco install lftp // windows
  */
 
 // definitions
-const buildFolder = path.join(__dirname, 'build')
+const buildFolder = path.join(__dirname, 'build');
 
 // init variables
 
 const pageName = process.argv.slice(2)[0];
+const region = process.argv.slice(2)[1];
 
-let indexHtmlFilePath = path.join(__dirname, pageName+'.html')
-let fbuf = fs.readFileSync(indexHtmlFilePath)
+let indexHtmlFilePath = path.join(__dirname, pageName + '.html');
+let fbuf = fs.readFileSync(indexHtmlFilePath);
 let content = fbuf.toString();
+console.log(indexHtmlFilePath);
 
-let templatePath = path.join(__dirname, 'template/' + pageName + '.html');
+let templatePath = path.join(__dirname, 'template', region, pageName + '.html');
 let mcHeader = fs.readFileSync(templatePath).toString();
 
-
-console.log('generate index_mc.html from: ' + pageName)
-
+console.log('generate index_mc.html from: ' + pageName + ` in ${region}`);
 
 // patch form contents
 const deployDate = Date.now();
 
-if(env === 'dev'){
-  content = content.replace(/assets/g, 'https://change.greenpeace.org.tw/2023/test/pref');
-}else{
+if (env === 'dev') {
+  if (region === 'tw') {
+    content = content.replace(
+      /assets/g,
+      'https://change.greenpeace.org.tw/2023/test/pref'
+    );
+  } else if (region === 'hk') {
+    content = content.replace(
+      /assets/g,
+      'https://api.greenpeace.org.hk/2023/test/pref'
+    );
+  }
+} else {
   content = content.replace(/assets/g, 'https://cloud.greentw.greenpeace.org');
 }
 
@@ -66,15 +76,14 @@ content = content.replace(/}}/g, ')=%%');
 
 // append the headers
 
-content = mcHeader + '\n' + content
-console.log('MC header patched')
+content = mcHeader + '\n' + content;
+console.log('MC header patched');
 
 // patch version numbers
-content = content.replace(/v=\d+/g, 'v=' + new Date().getTime())
-console.log('version number patched')
+content = content.replace(/v=\d+/g, 'v=' + new Date().getTime());
+console.log('version number patched');
 
 // output to the file
-fs.writeFileSync(path.join(__dirname, 'build', pageName+'-mc.html'), content)
+fs.writeFileSync(path.join(__dirname, 'build', pageName + '-mc.html'), content);
 // fs.writeFileSync("/Users/upchen/Dropbox/WorkingSpace/greenpeace/codes/mc/zhtw.2020.polar.savethearctic-content.html", content)
-console.log('content patched')
-
+console.log('content patched');

@@ -1,0 +1,131 @@
+%%[
+VAR @SubscriberKey, @ListId, @Submitted, @SuccessUrl, @Contact, @subscriberRow, @SubscriberRows,
+@ContactId, @LeadId,
+@Email, @MobilePhone, @HasOptedOutOfEmail, @Et4ae5__HasOptedOutOfMobile__c, @DoNotCall, @Interested_In_Arctic__c,
+@Interested_In_Climate__c, @Interested_In_Forest__c,
+@Interested_In_Health__c, @Interested_In_Oceans__c, @Interested_In_Plastics__c
+
+/**** Set parameters ****/
+SET @SubscriberKey = _subscriberkey
+IF EMPTY(@SubscriberKey) THEN
+  SET @SubscriberKey = RequestParameter('id')
+ENDIF
+SET @JobID = jobid
+SET @ListID = listid
+SET @BatchID = _JobSubscriberBatchID
+
+SET @Submitted = RequestParameter('Submitted')
+
+/**** Denotes the Hong Kong Market form language ****/
+SET @Market__c = "a0J2u000001NjoNEAS"
+
+/**** Retreive Contact from CRM ****/
+SET @SubscriberRows = RetrieveSalesforceObjects("Contact",
+"Email,MobilePhone,FirstName,Preferred_Language__c,Interested_In_Climate__c,Interested_In_Arctic__c,Interested_In_Forest__c,Interested_In_Health__c,Interested_In_Oceans__c,Interested_In_Plastics__c,HasOptedOutOfEmail,Et4ae5__HasOptedOutOfMobile__c,DoNotCall","Id","=",@SubscriberKey)
+
+SET @ContactId = @SubscriberKey
+
+/* Set Lead or Contact's attributes */
+IF NOT EMPTY(@ContactId) AND RowCount(@SubscriberRows) > 0 THEN
+SET @subscriberRow = Row(@SubscriberRows, 1)
+SET @EmailAddress = Field(@subscriberRow, "Email")
+SET @MobilePhone = Field(@subscriberRow, "MobilePhone")
+SET @FirstName = Field(@subscriberRow, "FirstName")
+SET @Preferred_Language__c = Field(@subscriberRow,"Preferred_Language__c")
+SET @HasOptedOutOfEmail = Field(@subscriberRow, "HasOptedOutOfEmail")
+SET @Et4ae5__HasOptedOutOfMobile__c = Field(@subscriberRow, "et4ae5__HasOptedOutOfMobile__c")
+SET @DoNotCall = Field(@subscriberRow, "DoNotCall")
+SET @Interested_In_Climate__c = Field(@subscriberRow, "Interested_In_Climate__c")
+SET @Interested_In_Arctic__c = Field(@subscriberRow, "Interested_In_Arctic__c")
+SET @Interested_In_Forest__c = Field(@subscriberRow, "Interested_In_Forest__c")
+SET @Interested_In_Health__c = Field(@subscriberRow, "Interested_In_Health__c")
+SET @Interested_In_Oceans__c = Field(@subscriberRow, "Interested_In_Oceans__c")
+SET @Interested_In_Plastics__c = Field(@subscriberRow, "Interested_In_Plastics__c")
+
+ENDIF
+
+/* Set text language variables */
+IF @Preferred_Language__c == "English" THEN
+
+SET @MainTitle = Concat("Hi, ", @FirstName)
+SET @Subtitle = "Manage your preferences"
+SET @EmailLabel = "My Email address"
+SET @EmailInputEdit = "Edit"
+SET @CommunicationTypeText = "Email communication"
+SET @HasOptedOutOfEmailLabelText = "I would like to receive emails from Greenpeace." 
+SET @CampaignInterestText = "Tell us your campaign interests:"
+SET @InterestAllText = "I am interested in everything."
+SET @Interested_In_Arctic__cText = "Arctic"
+SET @Interested_In_Plastics__cText = "Plastics"
+SET @Interested_In_Health__cText = "Health"
+SET @Interested_In_Forest__cText = "Forests"
+SET @Interested_In_Oceans__cText = "Oceans"
+SET @Interested_In_Climate__cText = "Climate"
+SET @PreferenceButtonText = "Update my preference"
+SET @SuccessTitle = "You have successfully updated your preference."
+SET @SuccessSubtitle = "You can always change your preference again!"
+SET @DonateButtonText = "Donate to Greenpeace"
+SET @HomepageText = "Visit our homepage"
+SET @FollowUsText = "Follow us on social media"
+SET @ErrorTitle = "Something went wrong!"
+SET @ErrorSubtitle = "Please try again or contact supporter services:"
+
+ELSE 
+
+SET @MainTitle = Concat("您好 ", @FirstName)
+SET @Subtitle = "您可以在這裡設定通訊偏好"
+SET @EmailLabel = "我的電子信箱"
+SET @EmailInputEdit = "更改"
+SET @CommunicationTypeText = "電子通訊"
+SET @HasOptedOutOfEmailLabelText = "我想訂閱綠色和平的電子報。" 
+SET @CampaignInterestText = "請選擇您最關注的議題："
+SET @InterestAllText = "我十分關注所有環保議題。"
+SET @Interested_In_Arctic__cText = "北極"
+SET @Interested_In_Arctic__cText_sub = "保護北極動物生活圈"
+SET @Interested_In_Plastics__cText = "減塑"
+SET @Interested_In_Plastics__cText_sub = "提高減塑意識"
+SET @Interested_In_Health__cText = "生活"
+SET @Interested_In_Health__cText_sub = "宜居城市生活平衡"
+SET @Interested_In_Forest__cText = "森林"
+SET @Interested_In_Forest__cText_sub = "保護地球珍貴林蔭"
+SET @Interested_In_Oceans__cText = "海洋"
+SET @Interested_In_Oceans__cText_sub = "推動成立海洋保護區"
+SET @Interested_In_Climate__cText = "氣候"
+SET @Interested_In_Climate__cText_sub = "避免地球加速升溫"
+SET @PreferenceButtonText = "變更我的偏好設定"
+SET @SuccessTitle = "您的偏好設定已經成功更新。"
+SET @SuccessSubtitle = "您可以隨時回到此頁面變更您的偏好設定！"
+SET @DonateButtonText = "捐款支持環保工作"
+SET @HomepageText = "瀏覽綠色和平官方網站"
+SET @FollowUsText = "追蹤我們的社群媒體"
+SET @ErrorTitle = "資料有誤，未能成功變更偏好設定"
+SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
+
+ENDIF
+
+/* Same in language */
+SET @GreenEmail = "donor.services.tw@greenpeace.org"
+
+/* Set prechecked fields */
+IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
+IF @Et4ae5__HasOptedOutOfMobile__c == "false" THEN SET @Et4ae5__HasOptedOutOfMobile__c_Checked = "checked" ENDIF
+IF @DoNotCall == "false" THEN SET @DoNotCall_Checked = "checked" ENDIF
+IF @Interested_In_Climate__c == "true" THEN SET @Interested_In_Climate__c_Checked = "checked" SET @ClimateClass =
+"pc-selected" ENDIF
+IF @Interested_In_Arctic__c == "true" THEN SET @Interested_In_Arctic__c_Checked = "checked" SET @ArcticClass =
+"pc-selected" ENDIF
+IF @Interested_In_Forest__c == "true" THEN SET @Interested_In_Forest__c_Checked = "checked" SET @ForestClass =
+"pc-selected" ENDIF
+IF @Interested_In_Health__c == "true" THEN SET @Interested_In_Health__c_Checked = "checked" SET @HealthClass =
+"pc-selected" ENDIF
+IF @Interested_In_Oceans__c == "true" THEN SET @Interested_In_Oceans__c_Checked = "checked" SET @OceanClass =
+"pc-selected" ENDIF
+IF @Interested_In_Plastics__c == "true" THEN SET @Interested_In_Plastics__c_Checked = "checked" SET @PlasticClass =
+"pc-selected" ENDIF
+
+IF (@Interested_In_Climate__c == "true" AND @Interested_In_Arctic__c == "true" AND @Interested_In_Forest__c == "true"
+AND @Interested_In_Health__c == "true" AND @Interested_In_Oceans__c == "true" AND @Interested_In_Plastics__c == "true")
+THEN SET @InterestChecked = "checked"
+ENDIF
+
+]%%

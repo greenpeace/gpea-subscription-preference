@@ -105,6 +105,9 @@ SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
 
 ENDIF
 
+/* Same in language */
+SET @GreenEmail = "donor.services.tw@greenpeace.org"
+
 /* Set prechecked fields */
 IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
 IF @Et4ae5__HasOptedOutOfMobile__c == "false" THEN SET @Et4ae5__HasOptedOutOfMobile__c_Checked = "checked" ENDIF

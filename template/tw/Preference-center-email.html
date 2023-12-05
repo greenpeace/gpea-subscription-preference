@@ -6,6 +6,9 @@ VAR @SubscriberKey, @ListId, @Submitted, @SuccessUrl, @Contact, @subscriberRow, 
 @Interested_In_Health__c, @Interested_In_Oceans__c, @Interested_In_Plastics__c
 /**** Set parameters ****/
 SET @SubscriberKey = _subscriberkey
+IF EMPTY(@SubscriberKey) THEN
+  SET @SubscriberKey = RequestParameter('id')
+ENDIF
 SET @JobID = jobid
 SET @ListID = listid
 SET @BatchID = _JobSubscriberBatchID
@@ -87,6 +90,8 @@ SET @FollowUsText = "追蹤我們的社群媒體"
 SET @ErrorTitle = "資料有誤，未能成功變更偏好設定"
 SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
 ENDIF
+/* Same in language */
+SET @GreenEmail = "donor.services.tw@greenpeace.org"
 /* Set prechecked fields */
 IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
 IF @Et4ae5__HasOptedOutOfMobile__c == "false" THEN SET @Et4ae5__HasOptedOutOfMobile__c_Checked = "checked" ENDIF

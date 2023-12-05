@@ -6,6 +6,9 @@ VAR @SubscriberKey, @ListId, @Submitted, @SuccessUrl, @Contact, @subscriberRow, 
 @Interested_In_Health__c, @Interested_In_Oceans__c, @Interested_In_Plastics__c
 /**** Set parameters ****/
 SET @SubscriberKey = _subscriberkey
+IF EMPTY(@SubscriberKey) THEN
+  SET @SubscriberKey = RequestParameter('id')
+ENDIF
 SET @JobID = jobid
 SET @ListID = listid
 SET @BatchID = _JobSubscriberBatchID
@@ -87,6 +90,8 @@ SET @FollowUsText = "追蹤我們的社群媒體"
 SET @ErrorTitle = "資料有誤，未能成功變更偏好設定"
 SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
 ENDIF
+/* Same in language */
+SET @GreenEmail = "donor.services.tw@greenpeace.org"
 /* Set prechecked fields */
 IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
 IF @Et4ae5__HasOptedOutOfMobile__c == "false" THEN SET @Et4ae5__HasOptedOutOfMobile__c_Checked = "checked" ENDIF
@@ -197,32 +202,32 @@ ENDIF
               <label for="Interested_In_Climate__c" class="pc-form-issue %%=v(@ClimateClass)=%%">
               <input class="hide" type="checkbox" name="Interested_In_Climate__c" id="Interested_In_Climate__c" value=""
                 %%=v(@Interested_In_Climate__c_Checked)=%%>
-              <span>%%=v(@Interested_In_Climate__cText)=%%<small>%%=v(@Interested_In_Climate__cText_sub)=%%</small></span>
+              <span><strong>%%=v(@Interested_In_Climate__cText)=%%</strong><small>%%=v(@Interested_In_Climate__cText_sub)=%%</small></span>
               </label>
               <label for="Interested_In_Oceans__c" class="pc-form-issue %%=v(@OceanClass)=%%">
                 <input class="hide" type="checkbox" name="Interested_In_Oceans__c" id="Interested_In_Oceans__c" value=""
                   %%=v(@Interested_In_Oceans__c_Checked)=%%>
-                <span>%%=v(@Interested_In_Oceans__cText)=%%<small>%%=v(@Interested_In_Oceans__cText_sub)=%%</small></span>
+                <span><strong>%%=v(@Interested_In_Oceans__cText)=%%</strong><small>%%=v(@Interested_In_Oceans__cText_sub)=%%</small></span>
               </label>
               <label for="Interested_In_Forest__c" class="pc-form-issue %%=v(@ForestClass)=%%">
                 <input class="hide" type="checkbox" name="Interested_In_Forest__c" id="Interested_In_Forest__c" value=""
                   %%=v(@Interested_In_Forest__c_Checked)=%%>
-                <span>%%=v(@Interested_In_Forest__cText)=%%<small>%%=v(@Interested_In_Forest__cText_sub)=%%</small></span>
+                <span><strong>%%=v(@Interested_In_Forest__cText)=%%</strong><small>%%=v(@Interested_In_Forest__cText_sub)=%%</small></span>
               </label>
               <label for="Interested_In_Plastics__c" class="pc-form-issue %%=v(@PlasticClass)=%%">
                 <input class="hide" type="checkbox" name="Interested_In_Plastics__c" id="Interested_In_Plastics__c"
                   value="" %%=v(@Interested_In_Plastics__c_Checked)=%%>
-                <span>%%=v(@Interested_In_Plastics__cText)=%%<small>%%=v(@Interested_In_Plastics__cText_sub)=%%</small></span>
+                <span><strong>%%=v(@Interested_In_Plastics__cText)=%%</strong><small>%%=v(@Interested_In_Plastics__cText_sub)=%%</small></span>
               </label>
               <label for="Interested_In_Arctic__c" class="pc-form-issue %%=v(@ArcticClass)=%%">
                 <input class="hide" type="checkbox" name="Interested_In_Arctic__c" id="Interested_In_Arctic__c" value=""
                   %%=v(@Interested_In_Arctic__c_Checked)=%%>
-                <span>%%=v(@Interested_In_Arctic__cText)=%%<small>%%=v(@Interested_In_Arctic__cText_sub)=%%</small></span>
+                <span><strong>%%=v(@Interested_In_Arctic__cText)=%%</strong><small>%%=v(@Interested_In_Arctic__cText_sub)=%%</small></span>
               </label>
               <label for="Interested_In_Health__c" class="pc-form-issue %%=v(@HealthClass)=%%">
                 <input class="hide" type="checkbox" name="Interested_In_Health__c" id="Interested_In_Health__c" value=""
                   %%=v(@Interested_In_Health__c_Checked)=%%>
-                <span>%%=v(@Interested_In_Health__cText)=%%<small>%%=v(@Interested_In_Health__cText_sub)=%%</small></span>
+                <span><strong>%%=v(@Interested_In_Health__cText)=%%</strong><small>%%=v(@Interested_In_Health__cText_sub)=%%</small></span>
               </label>
             </div>
             <button class="pc-btn-orange" id="preferenceButton">%%=v(@PreferenceButtonText)=%%</button>
@@ -280,7 +285,7 @@ ENDIF
         %%=v(@ErrorTitle)=%%
         <br>
         %%=v(@ErrorSubtitle)=%%
-        <a href="mailto: donor.services.hk@greenpeace.org">donor.services.hk@greenpeace.org</a>
+        <a href="mailto: %%=v(@GreenEmail)=%%">%%=v(@GreenEmail)=%%</a>
       </div>
       <div class="pc-main__form-wrapper">
         <a href="https://supporter.ea.greenpeace.org/tw/s/donate"><button
