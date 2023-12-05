@@ -9,7 +9,7 @@ VAR @SubscriberKey, @ListId, @Submitted, @SuccessUrl, @Contact, @subscriberRow, 
 /**** Set parameters ****/
 SET @SubscriberKey = _subscriberkey
 IF EMPTY(@SubscriberKey) THEN
-SET @SubscriberKey = RequestParameter("SubscriberKey")
+  SET @SubscriberKey = RequestParameter('id')
 ENDIF
 SET @JobID = jobid
 SET @ListID = listid
