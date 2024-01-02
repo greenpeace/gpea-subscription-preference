@@ -147,7 +147,9 @@ function validation(values) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  addHKCountryCode();
+  if (document.getElementById('phone-select-01')) {
+    addHKCountryCode();
+  }
   let error = {};
   const validateInput = (e) => {
     // console.log(e.target.value,e.target.getAttribute("disabled"))
