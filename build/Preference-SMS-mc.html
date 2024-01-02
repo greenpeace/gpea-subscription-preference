@@ -107,6 +107,7 @@ ENDIF
 
 /* Same in language */
 SET @GreenEmail = "donor.services.hk@greenpeace.org"
+SET @PhoneCountryCode = "+852"
 
 /* Set prechecked fields */
 IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
@@ -178,7 +179,7 @@ ENDIF
                             <div class="slds-form-element__control pc-form-control">
                                 <div class="slds-select_container">
                                     <select class="slds-select pc-form-select disabled" id="phone-select-01">
-                                        <option value="">+886</option>
+                                        <option value="%%=v(@PhoneCountryCode)=%%">%%=v(@PhoneCountryCode)=%%</option>
                                     </select>
                                 </div>
                             </div>
