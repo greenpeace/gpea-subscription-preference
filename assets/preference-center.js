@@ -62,16 +62,7 @@ window.addEventListener('click', (event) => {
   }
 });
 
-const formContent = {
-  empty_data_alert: '請填寫資料',
-  empty_phone_alert: '請填手機號碼，確保接收專案相關通知',
-  empty_select_data_alert: '請選擇',
-
-  invalid_phone_alert_852: '手提號碼應為8位數字,首位數字應為 4 - 9',
-  invalid_phone_alert_853: '手提號碼應為8位數字,首位數字應為 6',
-  invalid_email_alert: '請填上有效電子郵件',
-  invalid_format_alert: '請輸入有效格式',
-};
+let formContent = {};
 
 const mapFields = {
   MobilePhone: 'phone-input-01',
@@ -147,6 +138,31 @@ function validation(values) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  if (document.getElementById('preferLang').value == 'English') {
+    formContent = {
+      empty_data_alert: 'Please fill in the information.',
+      empty_phone_alert: 'Please provide your mobile phone number.',
+      empty_select_data_alert: 'Please select.',
+
+      invalid_phone_alert_852:
+        'Mobile numbers should consist of 8 digits, with the first digit ranging from 4 to 9.',
+      invalid_phone_alert_853:
+        'Mobile number should consist of 8 digits, with the first digit being 6.',
+      invalid_email_alert: 'Please enter a valid email.',
+      invalid_format_alert: 'Please enter a valid format.',
+    };
+  } else {
+    formContent = {
+      empty_data_alert: '請填寫資料',
+      empty_phone_alert: '請填手機號碼，確保接收專案相關通知',
+      empty_select_data_alert: '請選擇',
+
+      invalid_phone_alert_852: '手提號碼應為8位數字,首位數字應為 4 - 9',
+      invalid_phone_alert_853: '手提號碼應為8位數字,首位數字應為 6',
+      invalid_email_alert: '請填上有效電子郵件',
+      invalid_format_alert: '請輸入有效格式',
+    };
+  }
   if (document.getElementById('phone-select-01')) {
     addHKCountryCode();
   }
