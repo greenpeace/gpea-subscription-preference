@@ -67,8 +67,19 @@ if (env === 'dev') {
       'https://api.greenpeace.org.hk/2023/test/pref'
     );
   }
-} else {
-  content = content.replace(/assets/g, 'https://cloud.greentw.greenpeace.org');
+} else if (env === 'deploy') {
+  // content = content.replace(/assets/g, 'https://cloud.greentw.greenpeace.org');
+  if (region === 'tw') {
+    content = content.replace(
+      /assets/g,
+      'https://change.greenpeace.org.tw/2023/pref'
+    );
+  } else if (region === 'hk') {
+    content = content.replace(
+      /assets/g,
+      'https://api.greenpeace.org.hk/2023/pref'
+    );
+  }
 }
 
 content = content.replace(/{{/g, '%%=v(@');
