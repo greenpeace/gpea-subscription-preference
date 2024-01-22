@@ -49,21 +49,21 @@ ENDIF
 /* Set text language variables */
 IF @Preferred_Language__c == "English" THEN
 
-SET @MainTitle = Concat("Hello！ ", @FirstName)
+SET @MainTitle = Concat("Hi, ", @FirstName)
 SET @Subtitle = "Manage your preferences"
-SET @MobileLabel = "My mobile no. is:"
-SET @MobileInputEdit = "change"
-SET @CommunicationTypeText = "Mobile text message"
-SET @HasOptedOutOfMobileLabelText = "I want to receive text messages from Greenpeace." 
-SET @CampaignInterestText = "Please select the environmental issues you care the most."
-SET @InterestAllText = "I am interested in all of the below topics."
-SET @Interested_In_Arctic__cText = "Arctic - Safeguarding Arctic environment and ecosystems"
-SET @Interested_In_Plastics__cText = "Plastic - Building a plastic-free green lifestyle"
-SET @Interested_In_Health__cText = "Lifestyle - Creating sustainable, livable cities"
-SET @Interested_In_Forest__cText = "Forest - Preserving Earth's green lungs"
-SET @Interested_In_Oceans__cText = "Ocean - Promoting marine protected areas"
-SET @Interested_In_Climate__cText = "Climate - Mitigating the climate crisis"
-SET @PreferenceButtonText = "Change my preference"
+SET @MobileLabel = "My Email address"
+SET @MobileInputEdit = "Edit"
+SET @CommunicationTypeText = "SMS communication"
+SET @HasOptedOutOfMobileLabelText = "I would like to receive emails from Greenpeace." 
+SET @CampaignInterestText = "Tell us your campaign interests:"
+SET @InterestAllText = "I am interested in everything."
+SET @Interested_In_Arctic__cText = "Arctic"
+SET @Interested_In_Plastics__cText = "Plastics"
+SET @Interested_In_Health__cText = "Health"
+SET @Interested_In_Forest__cText = "Forests"
+SET @Interested_In_Oceans__cText = "Oceans"
+SET @Interested_In_Climate__cText = "Climate"
+SET @PreferenceButtonText = "Update my preference"
 SET @SuccessTitle = "You have successfully updated your preference."
 SET @SuccessSubtitle = "You can always change your preference again!"
 SET @DonateButtonText = "Donate to Greenpeace"
@@ -83,17 +83,17 @@ SET @HasOptedOutOfMobileLabelText = "我願意收到綠色和平的簡訊。"
 SET @CampaignInterestText = "請選擇您最關注的議題："
 SET @InterestAllText = "我十分關注所有環保議題。"
 SET @Interested_In_Arctic__cText = "北極"
-SET @Interested_In_Arctic__cText_sub = "保護北極環境與生態"
-SET @Interested_In_Plastics__cText = "塑膠"
-SET @Interested_In_Plastics__cText_sub = "打造無塑綠色生活"
+SET @Interested_In_Arctic__cText_sub = "保護北極動物生活圈"
+SET @Interested_In_Plastics__cText = "減塑"
+SET @Interested_In_Plastics__cText_sub = "提高減塑意識"
 SET @Interested_In_Health__cText = "生活"
-SET @Interested_In_Health__cText_sub = "共創可持續宜居城市"
+SET @Interested_In_Health__cText_sub = "宜居城市生活平衡"
 SET @Interested_In_Forest__cText = "森林"
-SET @Interested_In_Forest__cText_sub = "守護地球綠肺"
+SET @Interested_In_Forest__cText_sub = "保護地球珍貴林蔭"
 SET @Interested_In_Oceans__cText = "海洋"
 SET @Interested_In_Oceans__cText_sub = "推動成立海洋保護區"
 SET @Interested_In_Climate__cText = "氣候"
-SET @Interested_In_Climate__cText_sub = "減緩地球加速升溫"
+SET @Interested_In_Climate__cText_sub = "避免地球加速升溫"
 SET @PreferenceButtonText = "變更我的偏好設定"
 SET @SuccessTitle = "您的偏好設定已經成功更新。"
 SET @SuccessSubtitle = "您可以隨時回到此頁面變更您的偏好設定！"
@@ -106,8 +106,8 @@ SET @ErrorSubtitle = "請重新嘗試，或聯繫我們的會員服務人員："
 ENDIF
 
 /* Same in language */
-SET @GreenEmail = "donor.services.hk@greenpeace.org"
-SET @PhoneCountryCode = "+852"
+SET @GreenEmail = "donor.services.tw@greenpeace.org"
+SET @PhoneCountryCode = "+886"
 
 /* Set prechecked fields */
 IF @HasOptedOutOfEmail == "false" THEN SET @EmailOptIn_Checked = "checked" ENDIF
@@ -141,10 +141,10 @@ ENDIF
     <title>Preference center</title>
     <link rel="icon" type="image/png" sizes="96x96"
         href="https://image.greentw.greenpeace.org/lib/fe3211717564047d7c1278/m/1/b653cfd9-0f21-4984-b51b-838b742706ab.png" />
-    <link rel="stylesheet" href="https://api.greenpeace.org.hk/2023/pref/preference-center-css.css">
-    <link rel="stylesheet" href="https://api.greenpeace.org.hk/2023/pref/lightning.css">
+    <link rel="stylesheet" href="https://change.greenpeace.org.tw/2023/pref/preference-center-css.css">
+    <link rel="stylesheet" href="https://change.greenpeace.org.tw/2023/pref/lightning.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://api.greenpeace.org.hk/2023/pref/preference-center.js">
+    <script type="text/javascript" src="https://change.greenpeace.org.tw/2023/pref/preference-center.js">
     </script>
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
@@ -255,7 +255,7 @@ ENDIF
                         <button class="pc-btn-orange" id="preferenceButton">%%=v(@PreferenceButtonText)=%%</button>
                     </div>
                     <div class="pc-main__form-col">
-                        <div class="pc-main__form-kv" style="background-image: url(https://api.greenpeace.org.hk/2023/pref/general.jpg);"></div>
+                        <div class="pc-main__form-kv" style="background-image: url(https://change.greenpeace.org.tw/2023/pref/general.jpg);"></div>
                     </div>
                 </div>
                 <input type="hidden" name="SubscriberKey" value="%%=v(@SubscriberKey)=%%">
